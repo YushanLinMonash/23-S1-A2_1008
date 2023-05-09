@@ -103,9 +103,9 @@ class DoubleKeyTable(Generic[K1, K2, V]):
         index2 = self.hash2(key2, sub_table)
         if is_insert:
             if sub_table[index2] is None:
-                sub_table[index2] = key2
+                sub_table[key2] = None
             else:
-                raise FullError("Table is full and cannot be inserted.")
+                raise FullError("is full.")
         else:
             if sub_table[index2] is None:
                 return -1, -1
@@ -120,14 +120,16 @@ class DoubleKeyTable(Generic[K1, K2, V]):
             Returns an iterator of all keys in the bottom-hash-table for k.
         """
         if key is None:
-            for sub_table in self.table:
+            for i, sub_table in enumerate(self.array):
                 if sub_table is not None:
-                    yield sub_table.key
+                    for j, entry in enumerate(sub_table.table):
+                        if entry is not None:
+                            yield entry.key
         else:
             i = self.hash1(key)
-            sub_table = self.table[i]
+            sub_table = self.array[i]
             if sub_table is not None:
-                for j, entry in enumerate(sub_table.table):
+                for entry in sub_table.table:
                     if entry is not None:
                         yield entry.key
 

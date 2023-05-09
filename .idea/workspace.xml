@@ -35,6 +35,28 @@
   }
 }</component>
   <component name="RunManager" selected="Python tests.Python tests in test_double_hash.py">
+    <configuration name="hash_table" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="23-S1-A2_1008" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_structures" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_structures/hash_table.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Python tests in test_double_hash.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="23-S1-A2_1008" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -98,6 +120,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.Python tests in test_double_hash.py" />
+        <item itemvalue="Python.hash_table" />
         <item itemvalue="Python tests.Python tests in test_trail_methods.py" />
         <item itemvalue="Python tests.Python tests in test_mountain_manager.py" />
         <item itemvalue="Python tests.Python tests in test_infinite_hash_table.py" />
@@ -117,7 +140,7 @@
       <workItem from="1683516162163" duration="10601000" />
       <workItem from="1683544606079" duration="111000" />
       <workItem from="1683602857997" duration="4246000" />
-      <workItem from="1683626052561" duration="627000" />
+      <workItem from="1683626052561" duration="2848000" />
     </task>
     <servers />
   </component>
@@ -125,6 +148,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/23_S1_A2_1008$.coverage" NAME=" Coverage Results" MODIFIED="1683619092615" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/23_S1_A2_1008$hash_table.coverage" NAME="hash_table Coverage Results" MODIFIED="1683631271287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_structures" />
+    <SUITE FILE_PATH="coverage/23_S1_A2_1008$.coverage" NAME=" Coverage Results" MODIFIED="1683631924838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
   </component>
 </project>
