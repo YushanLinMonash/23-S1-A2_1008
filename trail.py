@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 
+from data_structures.stack_adt import Stack
 from mountain import Mountain
 
 from typing import TYPE_CHECKING, Union
@@ -8,6 +9,7 @@ from typing import TYPE_CHECKING, Union
 # Avoid circular imports for typing.
 if TYPE_CHECKING:
     from personality import WalkerPersonality
+
 
 @dataclass
 class TrailSplit:
@@ -26,6 +28,7 @@ class TrailSplit:
     def remove_branch(self) -> TrailStore:
         """Removes the branch, should just leave the remaining following trail."""
         return self.path_follow.store
+
 
 @dataclass
 class TrailSeries:
@@ -59,11 +62,12 @@ class TrailSeries:
         """Adds an empty branch after the current mountain, but before the following trail."""
         return TrailSeries(self.mountain, Trail(TrailSplit(Trail(None), Trail(None), self.following)))
 
+
 TrailStore = Union[TrailSplit, TrailSeries, None]
+
 
 @dataclass
 class Trail:
-
     store: TrailStore = None
 
     def add_mountain_before(self, mountain: Mountain) -> Trail:
@@ -76,17 +80,64 @@ class Trail:
 
     def follow_path(self, personality: WalkerPersonality) -> None:
         """Follow a path and add mountains according to a personality."""
-        raise NotImplementedError()
+        stack = Stack[Trail]()
+        stack.push(self)
+
+        while not stack.is_empty():
+            current_trail = stack.pop()
+            current_store = current_trail.store
+
+            if isinstance(current_store, TrailSeries):
+                personality.add_mountain(current_store.mountain)
+                stack.push(current_store.following)
+            elif isinstance(current_store, TrailSplit):
+                if personality.select_branch(current_store.path_top, current_store.path_bottom):
+                    stack.push(current_store.path_top)
+                else:
+                    stack.push(current_store.path_bottom)
 
     def collect_all_mountains(self) -> list[Mountain]:
         """Returns a list of all mountains on the trail."""
-        raise NotImplementedError()
+        stack = Stack[Trail]()
+        stack.push(self)
+        mountains = []
 
-    def length_k_paths(self, k) -> list[list[Mountain]]: # Input to this should not exceed k > 50, at most 5 branches.
+        while not stack.is_empty():
+            current_trail = stack.pop()
+            current_store = current_trail.store
+
+            if isinstance(current_store, TrailSeries):
+                mountains.append(current_store.mountain)
+                stack.push(current_store.following)
+            elif isinstance(current_store, TrailSplit):
+                stack.push(current_store.path_top)
+                stack.push(current_store.path_bottom)
+
+        return mountains
+
+    def length_k_paths(self, k) -> list[list[Mountain]]:  # Input to this should not exceed k > 50, at most 5 branches.
         """
         Returns a list of all paths of containing exactly k mountains.
         Paths are represented as lists of mountains.
 
         Paths are unique if they take a different branch, even if this results in the same set of mountains.
         """
-        raise NotImplementedError()
+        stack = Stack[tuple[Trail, list[Mountain]]]()
+        stack.push((self, []))
+        paths = []
+
+        while not stack.is_empty():
+            current_trail, current_mountains = stack.pop()
+            current_store = current_trail.store
+
+            if isinstance(current_store, TrailSeries):
+                new_mountains = current_mountains + [current_store.mountain]
+                if len(new_mountains) == k:
+                    paths.append(new_mountains)
+                else:
+                    stack.push((current_store.following, new_mountains))
+            elif isinstance(current_store, TrailSplit):
+                stack.push((current_store.path_top, current_mountains))
+                stack.push((current_store.path_bottom, current_mountains))
+
+        return paths

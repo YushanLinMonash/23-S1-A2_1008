@@ -8,6 +8,7 @@ K1 = TypeVar('K1')
 K2 = TypeVar('K2')
 V = TypeVar('V')
 
+
 class DoubleKeyTable(Generic[K1, K2, V]):
     """
     Double Hash Table.
@@ -23,11 +24,12 @@ class DoubleKeyTable(Generic[K1, K2, V]):
     """
 
     # No test case should exceed 1 million entries.
-    TABLE_SIZES = [5, 13, 29, 53, 97, 193, 389, 769, 1543, 3079, 6151, 12289, 24593, 49157, 98317, 196613, 393241, 786433, 1572869]
+    TABLE_SIZES = [5, 13, 29, 53, 97, 193, 389, 769, 1543, 3079, 6151, 12289, 24593, 49157, 98317, 196613, 393241,
+                   786433, 1572869]
 
     HASH_BASE = 31
 
-    def __init__(self, sizes:list|None=None, internal_sizes:list|None=None) -> None:
+    def __init__(self, sizes: list | None = None, internal_sizes: list | None = None) -> None:
         """
         create the underlying array. If sizes is not None,
         the provided array should replace the existing TABLE_SIZES to decide the size of the top-level hash table.
@@ -47,7 +49,6 @@ class DoubleKeyTable(Generic[K1, K2, V]):
         self.table_size = self.table_sizes[0]
         self.array = ArrayR[LinearProbeTable](self.table_size)
         self.count = 0
-
 
     def hash1(self, key: K1) -> int:
         """
@@ -111,7 +112,7 @@ class DoubleKeyTable(Generic[K1, K2, V]):
 
         return index1, index2
 
-    def iter_keys(self, key:K1|None=None) -> Iterator[K1|K2]:
+    def iter_keys(self, key: K1 | None = None) -> Iterator[K1 | K2]:
         """
         key = None:
             Returns an iterator of all top-level keys in hash table
@@ -130,14 +131,14 @@ class DoubleKeyTable(Generic[K1, K2, V]):
                     if entry is not None:
                         yield entry.key
 
-    def keys(self, key:K1|None=None) -> list[K1]:
+    def keys(self, key: K1 | None = None) -> list[K1]:
         """
         key = None: returns all top-level keys in the table.
         key = x: returns all bottom-level keys for top-level key x.
         """
         return list(self.iter_keys(key))
 
-    def iter_values(self, key:K1|None=None) -> Iterator[V]:
+    def iter_values(self, key: K1 | None = None) -> Iterator[V]:
         """
         key = None:
             Returns an iterator of all values in hash table
@@ -158,8 +159,7 @@ class DoubleKeyTable(Generic[K1, K2, V]):
                     if entry is not None:
                         yield entry.value
 
-
-    def values(self, key:K1|None=None) -> list[V]:
+    def values(self, key: K1 | None = None) -> list[V]:
         """
         key = None: returns all values in the table.
         key = x: returns all values for top-level key x.
@@ -195,7 +195,6 @@ class DoubleKeyTable(Generic[K1, K2, V]):
         index1, index2 = self._linear_probe(key[0], key[1], True)
         self.array[index1][index2] = data
         self.count += 1
-
 
     def __delitem__(self, key: tuple[K1, K2]) -> None:
         """
