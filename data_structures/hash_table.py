@@ -41,7 +41,7 @@ class LinearProbeTable(Generic[K, V]):
         if sizes is not None:
             self.TABLE_SIZES = sizes
         self.size_index = 0
-        self.array:ArrayR[tuple[K, V]] = ArrayR(self.TABLE_SIZES[self.size_index])
+        self.array: ArrayR[tuple[K, V]] = ArrayR(self.TABLE_SIZES[self.size_index])
         self.count = 0
 
     def hash(self, key: K) -> int:

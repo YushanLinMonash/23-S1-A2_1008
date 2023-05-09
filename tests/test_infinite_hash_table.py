@@ -3,6 +3,7 @@ from ed_utils.decorators import number
 
 from infinite_hash_table import InfiniteHashTable
 
+
 class TestInfiniteHash(unittest.TestCase):
 
     @number("4.1")

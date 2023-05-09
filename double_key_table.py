@@ -112,27 +112,6 @@ class DoubleKeyTable(Generic[K1, K2, V]):
 
         return index1, index2
 
-    def iter_keys(self, key: K1 | None = None) -> Iterator[K1 | K2]:
-        """
-        key = None:
-            Returns an iterator of all top-level keys in hash table
-        key = k:
-            Returns an iterator of all keys in the bottom-hash-table for k.
-        """
-        if key is None:
-            for i, sub_table in enumerate(self.array):
-                if sub_table is not None:
-                    for j, entry in enumerate(sub_table.table):
-                        if entry is not None:
-                            yield entry.key
-        else:
-            i = self.hash1(key)
-            sub_table = self.array[i]
-            if sub_table is not None:
-                for entry in sub_table.table:
-                    if entry is not None:
-                        yield entry.key
-
     def keys(self, key: K1 | None = None) -> list[K1]:
         """
         key = None: returns all top-level keys in the table.

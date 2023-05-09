@@ -98,22 +98,7 @@ class Trail:
 
     def collect_all_mountains(self) -> list[Mountain]:
         """Returns a list of all mountains on the trail."""
-        stack = Stack[Trail]()
-        stack.push(self)
-        mountains = []
-
-        while not stack.is_empty():
-            current_trail = stack.pop()
-            current_store = current_trail.store
-
-            if isinstance(current_store, TrailSeries):
-                mountains.append(current_store.mountain)
-                stack.push(current_store.following)
-            elif isinstance(current_store, TrailSplit):
-                stack.push(current_store.path_top)
-                stack.push(current_store.path_bottom)
-
-        return mountains
+        raise NotImplementedError()
 
     def length_k_paths(self, k) -> list[list[Mountain]]:  # Input to this should not exceed k > 50, at most 5 branches.
         """
@@ -122,22 +107,4 @@ class Trail:
 
         Paths are unique if they take a different branch, even if this results in the same set of mountains.
         """
-        stack = Stack[tuple[Trail, list[Mountain]]]()
-        stack.push((self, []))
-        paths = []
-
-        while not stack.is_empty():
-            current_trail, current_mountains = stack.pop()
-            current_store = current_trail.store
-
-            if isinstance(current_store, TrailSeries):
-                new_mountains = current_mountains + [current_store.mountain]
-                if len(new_mountains) == k:
-                    paths.append(new_mountains)
-                else:
-                    stack.push((current_store.following, new_mountains))
-            elif isinstance(current_store, TrailSplit):
-                stack.push((current_store.path_top, current_mountains))
-                stack.push((current_store.path_bottom, current_mountains))
-
-        return paths
+        raise NotImplementedError()
