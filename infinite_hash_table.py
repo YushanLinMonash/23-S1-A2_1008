@@ -27,6 +27,9 @@ class InfiniteHashTable(Generic[K, V]):
         self.count = 0
 
     def hash(self, key: K) -> int:
+        """
+        The complexity of this function is O(1), as it performs a simple modulo operation and access to the key's character.
+        """
         if self.level < len(key):
             return ord(key[self.level]) % (self.TABLE_SIZE - 1)
         return self.TABLE_SIZE - 1
@@ -36,6 +39,15 @@ class InfiniteHashTable(Generic[K, V]):
         Get the value at a certain key
 
         :raises KeyError: when the key doesn't exist.
+        """
+        """
+        The complexity of this function depends on the level of the hash table.
+    - If the level is less than the length of the key, the complexity is O(1).
+    - If the level is equal to the length of the key, the complexity is O(N), 
+    where N is the number of elements in the sub-hash table.
+    - If the level is greater than the length of the key, the complexity is O(N^M), 
+    where N is the number of elements in the sub-hash table 
+    and M is the difference between the level and the length of the key.
         """
         index = self.hash(key)
         entry = self.array[index]
@@ -54,6 +66,15 @@ class InfiniteHashTable(Generic[K, V]):
     def __setitem__(self, key: K, value: V) -> None:
         """
         Set an (key, value) pair in our hash table.
+        """
+        """
+        The complexity of this function depends on the level of the hash table.
+    - If the level is less than the length of the key, the complexity is O(1).
+    - If the level is equal to the length of the key, the complexity is O(N), 
+    where N is the number of elements in the sub-hash table.
+    - If the level is greater than the length of the key, the complexity is O(N^M), 
+    where N is the number of elements in the sub-hash table 
+    and M is the difference between the level and the length of the key.
         """
         index = self.hash(key)
         entry = self.array[index]
@@ -78,6 +99,15 @@ class InfiniteHashTable(Generic[K, V]):
 
         :raises KeyError: when the key doesn't exist.
         """
+        """
+        The complexity of this function depends on the level of the hash table.
+    - If the level is less than the length of the key, the complexity is O(1).
+    - If the level is equal to the length of the key, the complexity is O(N),
+     where N is the number of elements in the sub-hash table.
+    - If the level is greater than the length of the key, the complexity is O(N^M),
+     where N is the number of elements in the sub-hash table 
+     and M is the difference between the level and the length of the key.
+        """
         index = self.hash(key)
         entry = self.array[index]
 
@@ -97,6 +127,9 @@ class InfiniteHashTable(Generic[K, V]):
                 self.array[index] = (k, v)
 
     def __len__(self):
+        """
+        The complexity of this function is O(1), as it returns the count attribute.
+        """
         return self.count
 
     def __str__(self) -> str:
@@ -104,6 +137,10 @@ class InfiniteHashTable(Generic[K, V]):
         String representation.
 
         Not required but may be a good testing tool.
+        """
+        """
+        The complexity of this function depends on the number of elements in the hash table.
+        In the worst case, it can be O(N), where N is the number of elements.
         """
         result = []
         for entry in self.array:
@@ -119,6 +156,15 @@ class InfiniteHashTable(Generic[K, V]):
         Get the sequence of positions required to access this key.
 
         :raises KeyError: when the key doesn't exist.
+        """
+        """
+        The complexity of this function depends on the level of the hash table.
+    - If the level is less than the length of the key, the complexity is O(1).
+    - If the level is equal to the length of the key, 
+    the complexity is O(N), where N is the number of elements in the sub-hash table.
+    - If the level is greater than the length of the key, the complexity is O(N^M), 
+    where N is the number of elements in the sub-hash table 
+    and M is the difference between the level and the length of the key.
         """
         location = [self.hash(key)]
         entry = self.array[location[0]]
@@ -144,6 +190,9 @@ class InfiniteHashTable(Generic[K, V]):
         Checks to see if the given key is in the Hash Table
 
         :complexity: See linear probe.
+        """
+        """
+        The complexity of this function depends on the level of the hash which will be O(n)
         """
         try:
             _ = self[key]
