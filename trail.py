@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 
-from data_structures.stack_adt import Stack
+from data_structures.stack_adt import Stack, T
 from mountain import Mountain
 
 from typing import TYPE_CHECKING, Union
@@ -66,6 +66,31 @@ class TrailSeries:
 TrailStore = Union[TrailSplit, TrailSeries, None]
 
 
+class ArrayStack(Stack[T]):
+    def __init__(self) -> None:
+        super().__init__()
+        self.items = []
+
+    def push(self, item: T) -> None:
+        self.items.append(item)
+        self.length += 1
+
+    def pop(self) -> T:
+        if self.is_empty():
+            raise IndexError("Pop from an empty stack")
+        item = self.items.pop()
+        self.length -= 1
+        return item
+
+    def peek(self) -> T:
+        if self.is_empty():
+            raise IndexError("Peek at an empty stack")
+        return self.items[-1]
+
+    def is_full(self) -> bool:
+        return False
+
+
 @dataclass
 class Trail:
     store: TrailStore = None
@@ -79,22 +104,27 @@ class Trail:
         return Trail(TrailSplit(Trail(None), Trail(None), self))
 
     def follow_path(self, personality: WalkerPersonality) -> None:
-        """Follow a path and add mountains according to a personality."""
-        stack = Stack[Trail]()
-        stack.push(self)
+        stack = ArrayStack()
+        stack.push((self, False))
 
         while not stack.is_empty():
-            current_trail = stack.pop()
+            current_trail, visited = stack.pop()
             current_store = current_trail.store
 
             if isinstance(current_store, TrailSeries):
-                personality.add_mountain(current_store.mountain)
-                stack.push(current_store.following)
-            elif isinstance(current_store, TrailSplit):
-                if personality.select_branch(current_store.path_top, current_store.path_bottom):
-                    stack.push(current_store.path_top)
+                if not visited:
+                    stack.push((current_trail, True))
+                    personality.add_mountain(current_store.mountain)
+                    stack.push((current_store.following, False))
                 else:
-                    stack.push(current_store.path_bottom)
+                    continue
+            elif isinstance(current_store, TrailSplit):
+                if not visited:
+                    stack.push((current_trail, True))
+                    if personality.select_branch(current_store.path_top, current_store.path_bottom):
+                        stack.push((current_store.path_top, False))
+                    else:
+                        stack.push((current_store.path_bottom, False))
 
     def collect_all_mountains(self) -> list[Mountain]:
         """Returns a list of all mountains on the trail."""
